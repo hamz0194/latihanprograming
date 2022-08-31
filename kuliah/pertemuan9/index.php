@@ -1,35 +1,13 @@
 <?php
-// Koneksi ke Database
-$conn = mysqli_connect("localhost", "root", "", "phpdasar");
-
-// ambil data dari tabel mahasiswa / query data mahasiswa
-$result = mysqli_query($conn, "SELECT * FROM mahasiswa");
-
-// untuk mengecek data yang diambil dari table benar atau tidak
-if (!$result) {
-  echo mysqli_error($conn);
-}
-
-// ambil data (fetch) mahasiswa dari object result
-// terdapat 4 cara untuk mengambil data:
-// mysqli_fetch_row() // mengembalikan array numerik
-// mysqli_fetch_assoc() //mengembalikan array associative/berupa string dari isi table
-// mysqli_fetch_array() //mengembalikan keduanya, diatas
-// mysqli_fetch_object()
-
-// while ($mhs = mysqli_fetch_assoc($result)) {
-//   var_dump($mhs["nama"]);
-// }
-
+require 'functions.php';
+$mahasiswa = query("SELECT * FROM mahasiswa");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Halaman Admin!</title>
 </head>
 
@@ -48,7 +26,7 @@ if (!$result) {
       <th>Aksi</th>
     </tr>
     <?php $i = 1; ?>
-    <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+    <?php foreach ($mahasiswa as $row) : ?>
       <tr>
         <td><?= $i; ?></td>
         <td><img src="img/<?= $row["gambar"]; ?>" width="50"></td>
@@ -62,7 +40,7 @@ if (!$result) {
         </td>
       </tr>
       <?php $i++ ?>
-    <?php endwhile; ?>
+    <?php endforeach; ?>
 
   </table>
 </body>
